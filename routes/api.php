@@ -21,3 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('todolist/{urgency}', [TodolistController::class, 'todolist']);
 Route::get('todolistDetail/{id}', [TodolistController::class, 'todolistDetail']);
+Route::get('lateTodolists', [TodolistController::class, 'showLateTodolists']);
+Route::get('todayTodolists', [TodolistController::class, 'showTodayTodolists']);
+Route::get('tomorrowTodolists', [TodolistController::class, 'showTomorrowTodolists']);
+Route::get('somedayTodolists', [TodolistController::class, 'showSomedayTodolists']);
