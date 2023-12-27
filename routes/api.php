@@ -25,3 +25,4 @@ Route::get('lateTodolists', [TodolistController::class, 'showLateTodolists']);
 Route::get('todayTodolists', [TodolistController::class, 'showTodayTodolists']);
 Route::get('tomorrowTodolists', [TodolistController::class, 'showTomorrowTodolists']);
 Route::get('somedayTodolists', [TodolistController::class, 'showSomedayTodolists']);
+Route::get('doneTodolists', [TodolistController::class, 'showDoneTodolists']);
