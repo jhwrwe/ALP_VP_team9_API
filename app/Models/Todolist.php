@@ -10,7 +10,7 @@ class Todolist extends Model
     use HasFactory;
 
     protected $fillable = [
-        'todo_title',
+        'title',
         'date',
         'time',
         'urgency_status',
