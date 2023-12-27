@@ -1,10 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+
+use App\Http\Controllers\Controller;
 use App\Models\Mission;
 use App\Http\Requests\StoreMissionRequest;
 use App\Http\Requests\UpdateMissionRequest;
+use App\Models\TodolistMission;
 use Illuminate\Http\Request;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +19,7 @@ class MissionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function CreateMission(Request $request)
+    public function storeMission(Request $request)
     {
         try {
             $validated = $request->validate([
@@ -24,13 +27,14 @@ class MissionController extends Controller
                 'description' => 'required|string',
                 'quantity' => 'required|integer',
                 'coins' => 'required|integer',
+                'urgency_status' => ''
             ]);
 
-            $Mission = Mission::create($validated);
+            $mission = Mission::create($validated);
             return [
                 'status' => Response::HTTP_OK,
                 'message' => "Success",
-                'data' => $Mission
+                'data' => $mission
             ];
         } catch (Exception $e) {
             return [
@@ -44,9 +48,9 @@ class MissionController extends Controller
     public function deleteMission($id)
     {
         try {
-            $Mission =  Mission::where('id', $id)->first();
+            $mission = Mission::where('id', $id)->first();
 
-            if (!$Mission) {
+            if (!$mission) {
                 return [
                     'status' => Response::HTTP_NOT_FOUND,
                     'message' => "Todolist not found",
@@ -54,12 +58,12 @@ class MissionController extends Controller
                 ];
             }
 
-            $Mission->delete();
+            $mission->delete();
 
             return [
                 'status' => Response::HTTP_OK,
                 'message' => "Todolist deleted successfully",
-                'data' => $Mission
+                'data' => $mission
             ];
 
         } catch (Exception $e) {
@@ -70,56 +74,18 @@ class MissionController extends Controller
             ];
         }
     }
-    public function getAllMission(){
-        $Mission = Mission::all();
-        return MissionsResource::collection($Mission);
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getAllMission()
     {
-        //
-    }
+        $missionsWithCount = Mission::withCount('todolists')->get();
+        foreach ($missionsWithCount as $mission) {
+            if ($mission->todolists_count >= $mission->quantity) {
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreMissionRequest $request)
-    {
-        //
-    }
+                $mission->update(['status' => true]);
+            }
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Mission $mission)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Mission $mission)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateMissionRequest $request, Mission $mission)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Mission $mission)
-    {
-        //
+        // Mengembalikan data dalam format yang Anda inginkan menggunakan MissionsResource
+        return MissionsResource::collection($missionsWithCount);
     }
 }
