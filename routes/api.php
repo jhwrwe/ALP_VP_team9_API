@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\TodolistController;
+
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BadgesUserController;
+use App\Http\Controllers\Api\BadgesController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +23,27 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::post('login',[AuthController::class,'login']);
+Route::middleware(['auth:sanctum'])->group(
+     function(){
+        Route::delete('logout',[AuthController::class,'logout']);
+        Route::get('check_password',[UserController::class,'checkPassword']);
+        Route::get('all_user',[UserController::class,'getAllUser']);
+        Route::patch('update_user',[UserController::class,'updateUser']);
+        Route::delete('delete_user',[UserController::class,'deleteUser']);
+     }
+);
+
+
+
+Route::post('create_user',[UserController::class,'createUser']);
+Route::post('create_badge',[BadgesController::class,'createBadge']);
+Route::post('create_badge_user',[BadgesUserController::class,'CreateUserBadge']);
+
+Route::delete('delete_badge_user',[BadgesUserController::class,'DeleteBadgeUser']);
+Route::delete('delete_badge',[BadgesController::class,'deletedbadge']);
+
+
 
 Route::get('todolist/{urgency}', [TodolistController::class, 'todolist']);
 Route::get('todolistDetail/{id}', [TodolistController::class, 'todolistDetail']);
