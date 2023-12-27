@@ -26,3 +26,7 @@ Route::get('todayTodolists', [TodolistController::class, 'showTodayTodolists']);
 Route::get('tomorrowTodolists', [TodolistController::class, 'showTomorrowTodolists']);
 Route::get('somedayTodolists', [TodolistController::class, 'showSomedayTodolists']);
 Route::get('doneTodolists', [TodolistController::class, 'showDoneTodolists']);
+Route::post('todolist', [TodolistController::class, 'storeTodolist']);
+Route::post('todolist', [TodolistController::class, 'storeTodolist']);
+Route::patch('todolist/{id}', [TodolistController::class, 'updateTodolist']);
+Route::delete('todolist/{id}', [TodolistController::class, 'deleteTodolist']);
