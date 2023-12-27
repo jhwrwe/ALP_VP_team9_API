@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\badge_user;
+use App\Models\BadgeUser;
 
 use App\Models\badge;
 use App\Http\Resources\BadgeUserResource;
@@ -27,7 +27,7 @@ class BadgeUserController extends Controller
 
     }
     public function CreateFavorit (Request $request){
-        $badgeuser = new badge_user();
+        $badgeuser = new BadgeUser();
         $badgeuser->user_id = $request->user_id;
         $badgeuser->badge_id = $request->badge_id;
         $badgeuser->save();
@@ -39,7 +39,7 @@ class BadgeUserController extends Controller
         ];
     }
     public function DeleteFavorit (Request $request){
-        $badgeuser = badge_user::where('id', $request->id)->first();
+        $badgeuser = BadgeUser::where('id', $request->id)->first();
         $badgeuser->delete();
         return[
             'status'=> Response::HTTP_OK,
