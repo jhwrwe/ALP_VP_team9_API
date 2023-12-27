@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\Mission;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Exception;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\Catch_;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -126,7 +128,12 @@ public function updateUser(Request $request){
                         'status'=> Response::HTTP_OK,
                         'message'=> ''
                         ];
-                    }
+                                    }
         }
     }
+    // public function addCoins($id){
+    //     $validated =
+    //     $user = User::where('id', Auth::id())->first();
+    //     $->update($validated);
+    // }
 }

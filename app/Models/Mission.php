@@ -14,10 +14,7 @@ class Mission extends Model
         'title',
         'description',
         'quantity',
-        'urgency_status',
-        'description',
-        'progress_status',
-        'location'
+        'coins'
     ];
 
     public function todolists()
