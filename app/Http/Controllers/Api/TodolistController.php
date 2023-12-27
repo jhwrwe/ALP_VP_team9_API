@@ -58,5 +58,12 @@ class TodolistController extends Controller
         return TodolistResource::collection($todolists);
     }
 
+    public function showDoneTodolists(){
+
+        // Ambil todolists yang memiliki tanggal (dan mungkin waktu) lebih kecil dari tanggal saat ini
+        $todolists = Todolist::where('progress_status', 1)->get();
+        return TodolistResource::collection($todolists);
+    }
+
     
 }

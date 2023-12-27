@@ -19,7 +19,7 @@ class TodolistSeeder extends Seeder
             'time' => '09:00:00',
             'urgency_status' => 1,
             'description' => 'Pertemuan dengan tim untuk review proyek.',
-            'progress_status' => false,
+            'progress_status' => true,
             'location' => 'Ruang Rapat A',
             'user_id' => 1,  // Gantikan dengan ID user yang valid
             'created_at' => now(),
