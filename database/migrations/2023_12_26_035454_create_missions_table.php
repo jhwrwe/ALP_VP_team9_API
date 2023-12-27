@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->integer('quantitiy');
+            $table->integer('quantity');
             $table->integer('coins');
+            $table->integer('urgency_status')->nullable();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

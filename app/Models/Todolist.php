@@ -27,6 +27,6 @@ class Todolist extends Model
 
     public function missions()
     {
-        return $this->belongsToMany(Mission::class);
+        return $this->belongsToMany(Mission::class, 'todolist_missions', 'mission_id', 'todolist_id');
     }
 }

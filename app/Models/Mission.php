@@ -14,12 +14,14 @@ class Mission extends Model
         'title',
         'description',
         'quantity',
-        'coins'
+        'coins',
+        'urgency_status',
+        'status'
     ];
 
     public function todolists()
     {
-        return $this->belongsToMany(Todolist::class);
+        return $this->belongsToMany(Todolist::class, 'todolist_missions', 'mission_id', 'todolist_id');
     }
 
     public function users()

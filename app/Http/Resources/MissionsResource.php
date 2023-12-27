@@ -20,6 +20,7 @@ class MissionsResource extends JsonResource
                 "description"=>$this->description,
                 "quantity"=>$this->quantity,
                 "coins"=>$this->coins,
+                'todolists_count' => $this->todolists_count
         ];
     }
 }
