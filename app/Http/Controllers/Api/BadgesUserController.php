@@ -49,4 +49,11 @@ class BadgesUserController extends Controller
 
         ];
     }
+    function substractcoins($id){
+        $User = User::where('id', Auth::id())->first();
+        $badge= badge::where('id',$id)->first();
+        $User::update([
+            'coins'=>$User->coins - $badge->price
+        ]);
+    }
 }
