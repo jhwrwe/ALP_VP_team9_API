@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\BadgeResource;
 use App\Models\BadgeUser;
 use App\Http\Controllers\Controller;
 use App\Models\badge;
@@ -27,10 +28,10 @@ class BadgesUserController extends Controller
         ];
 
     }
-    public function CreateUserBadge (Request $request, $id){
+    public function CreateUserBadge (Request $request,$id){
         $badgeuser = new BadgeUser();
-        $badgeuser->user_id = $request->user_id;
-        $badgeuser->badge_id = Badge::where('id',$id)->first();
+        $badgeuser->user_id = Auth::id();
+        $badgeuser->badge_id = $id;
         $badgeuser->save();
         return[
             'status'=> Response::HTTP_OK,
@@ -50,14 +51,16 @@ class BadgesUserController extends Controller
         ];
     }
     function substractcoins($id){
-        $User = User::where('id', Auth::id())->first();
-        $badge= badge::where('id',$id)->first();
-        $User::update([
-            'coins'=>$User->coins - $badge->price
+        $user = User::find(Auth::id());
+        $badge = badge::find($id);
+        $user->update([
+            'coins'=>$user->coins - $badge->price
         ]);
     }
     function seeAllUserBadge(){
-        $badgeUser= BadgeUser::where('user_id',Auth::id())->get();
-        return BadgeUserResource::collection($badgeUser);
+        $badgeUsers = BadgeUser::where('user_id', Auth::id())->get();
+        $badgeIds = $badgeUsers->pluck('badge_id');
+        $badges = badge::whereIn('id', $badgeIds)->get();
+        return BadgeResource::collection($badges);
     }
 }

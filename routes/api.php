@@ -32,6 +32,15 @@ Route::middleware(['auth:sanctum'])->group(
         Route::patch('update_user', [UserController::class, 'updateUser']);
         Route::delete('delete_user', [UserController::class, 'deleteUser']);
 
+        Route::post('create_badge', [BadgesController::class, 'createBadge']);
+        Route::delete('delete_badge', [BadgesController::class, 'deletedbadge']);
+        Route::get('see_All_Badges', [BadgesController::class, 'seeBadge']);
+
+        Route::post('create_badge_user/{id}', [BadgesUserController::class, 'CreateUserBadge']);
+        Route::delete('delete_badge_user', [BadgesUserController::class, 'DeleteBadgeUser']);
+        Route::put('coins_minus/{id}', [BadgesUserController::class, 'substractcoins']);
+        Route::get('see_all_badge', [BadgesUserController::class, 'seeAllUserBadge']);
+
         Route::get('todolist/{urgency}', [TodolistController::class, 'todolist']);
         Route::get('todolistDetail/{id}', [TodolistController::class, 'todolistDetail']);
         Route::get('lateTodolists', [TodolistController::class, 'showLateTodolists']);
@@ -47,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('mission', [MissionController::class, 'getAllMission']);
         Route::delete('mission/{id}', [MissionController::class, 'deleteMission']);
         Route::patch('claimMissionCoin/{id}', [MissionController::class, 'claimMissionCoin']);
-        
+
         Route::patch('todolistDone/{id}', [TodolistController::class, 'todolistDone']);
     }
 );
@@ -55,11 +64,6 @@ Route::middleware(['auth:sanctum'])->group(
 
 
 Route::post('create_user', [UserController::class, 'createUser']);
-Route::post('create_badge', [BadgesController::class, 'createBadge']);
-Route::post('create_badge_user', [BadgesUserController::class, 'CreateUserBadge']);
-
-Route::delete('delete_badge_user', [BadgesUserController::class, 'DeleteBadgeUser']);
-Route::delete('delete_badge', [BadgesController::class, 'deletedbadge']);
 
 
-    
+
