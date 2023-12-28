@@ -11,6 +11,7 @@ class MissionUser extends Model
     protected $fillable = [
         'mission_id',
         'user_id',
+        'status'
     ];
 
     public function mission(){

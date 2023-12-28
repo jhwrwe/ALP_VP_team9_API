@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('quantity');
             $table->integer('coins');
             $table->integer('urgency_status')->nullable();
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

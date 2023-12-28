@@ -64,5 +64,31 @@ class TodolistSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        DB::table('todolists')->insert([
+            'title' => 'Makan Pentol',
+            'date' => '2023-12-1',
+            'time' => '10:30:00',
+            'urgency_status' => 3,
+            'description' => 'Mengadakan pelatihan untuk karyawan baru.',
+            'progress_status' => false,
+            'location' => 'Aula Utama',
+            'user_id' => 2,  // Gantikan dengan ID user yang valid
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('todolists')->insert([
+            'title' => 'Makan Bakso',
+            'date' => '2023-12-1',
+            'time' => '10:30:00',
+            'urgency_status' => 3,
+            'description' => 'Mengadakan pelatihan untuk karyawan baru.',
+            'progress_status' => false,
+            'location' => 'Aula Utama',
+            'user_id' => 2,  // Gantikan dengan ID user yang valid
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

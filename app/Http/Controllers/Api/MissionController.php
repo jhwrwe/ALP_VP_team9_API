@@ -78,14 +78,42 @@ class MissionController extends Controller
     public function getAllMission()
     {
         $missionsWithCount = Mission::withCount('todolists')->get();
-        foreach ($missionsWithCount as $mission) {
-            if ($mission->todolists_count >= $mission->quantity) {
+        // foreach ($missionsWithCount as $mission) {
+        //     if ($mission->todolists_count >= $mission->quantity) {
 
-                $mission->update(['status' => true]);
-            }
-        }
+        //         $mission->update(['status' => true]);
+        //     }
+        // }
 
         // Mengembalikan data dalam format yang Anda inginkan menggunakan MissionsResource
         return MissionsResource::collection($missionsWithCount);
+    }
+
+    public function claimMissionCoin($id)
+    {
+        $mission = Mission::where('id', $id)->get();
+
+        if (!$mission) {
+            return [
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => "Mission not found",
+                'data' => null
+            ];
+        }
+
+        if($mission->status == true){
+            
+            return [
+                'status' => Response::HTTP_OK,
+                'message' => "Coin Sucessfully Claimed",
+                'data' => $mission
+            ];
+        }else{
+            return [
+                'status' => Response::HTTP_NOT_FOUND,
+                'message' => "Mission not finish yet",
+                'data' => null
+            ];
+        }
     }
 }
