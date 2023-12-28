@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Mission;
 use App\Http\Requests\StoreMissionRequest;
 use App\Http\Requests\UpdateMissionRequest;
+use App\Models\MissionUser;
 use App\Models\TodolistMission;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use PhpParser\Node\Stmt\Catch_;
 use App\Http\Resources\MissionsResource;
@@ -77,41 +80,44 @@ class MissionController extends Controller
 
     public function getAllMission()
     {
-        $missionsWithCount = Mission::withCount('todolists')->get();
-        // foreach ($missionsWithCount as $mission) {
-        //     if ($mission->todolists_count >= $mission->quantity) {
-
-        //         $mission->update(['status' => true]);
-        //     }
-        // }
+        $user_id = auth::id();
+        $missionsUser = MissionUser::where('user_id', $user_id)->with('mission')->get();
 
         // Mengembalikan data dalam format yang Anda inginkan menggunakan MissionsResource
-        return MissionsResource::collection($missionsWithCount);
+        return MissionsResource::collection($missionsUser);
     }
 
     public function claimMissionCoin($id)
-    {
-        $mission = Mission::where('id', $id)->get();
+    {   
+        $user_id = auth::id();
+        $missionsUser = MissionUser::where('user_id', $user_id)->where('mission_id', $id)->first();
 
-        if (!$mission) {
+        if ($missionsUser->status == false) {
             return [
                 'status' => Response::HTTP_NOT_FOUND,
-                'message' => "Mission not found",
+                'message' => "Mission not finish yet",
                 'data' => null
             ];
         }
+        $user = User::where('id', $user_id)->first();
+        $mission = Mission::where('id', $id)->first();
+        $user->update([
+            $user->coins += $mission->coins
+        ]);
+        $missionsUser->delete();
 
-        if($mission->status == true){
+
+        if($missionsUser->status == true){
             
             return [
                 'status' => Response::HTTP_OK,
                 'message' => "Coin Sucessfully Claimed",
-                'data' => $mission
+                'data' => null
             ];
         }else{
             return [
                 'status' => Response::HTTP_NOT_FOUND,
-                'message' => "Mission not finish yet",
+                'message' => "Mission not found",
                 'data' => null
             ];
         }
