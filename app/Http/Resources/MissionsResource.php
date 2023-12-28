@@ -15,12 +15,12 @@ class MissionsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-                "id"=> $this->id,
-                "title"=> $this->title,
-                "description"=>$this->description,
-                "quantity"=>$this->quantity,
-                "coins"=>$this->coins,
-                'todolists_count' => $this->todolists_count
+            
+                "remaining"=>$this->remaining,// contoh akses atribut dari relasi mission
+                "title" => $this->mission->title,
+                "description" => $this->mission->description,
+                "quantity" => $this->mission->quantity,
+                "coins" => $this->mission->coins,
         ];
     }
 }

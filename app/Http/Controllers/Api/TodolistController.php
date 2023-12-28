@@ -86,7 +86,6 @@ class TodolistController extends Controller
             $user_id = Auth::id();
             $todolist = Todolist::where('id', $id)->first();
 
-
             if (!$todolist) {
                 return [
                     'status' => Response::HTTP_NOT_FOUND,
@@ -114,18 +113,25 @@ class TodolistController extends Controller
                 ]);
             }
 
-            
-            $missionsWithCount = Mission::withCount('todolists')
+
+            $missionsWithCount = Mission::select('missions.*')
+                ->withCount(['todolists' => function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                }])
                 ->whereHas('todolists', function ($query) use ($user_id) {
                     $query->where('user_id', $user_id);
                 })
                 ->get();
 
             foreach ($missionsWithCount as $mission) {
-                if ($mission->todolists_count >= $mission->quantity) {
-                    $userMission = MissionUser::where('user_id', $user_id)
+                $userMission = MissionUser::where('user_id', $user_id)
                         ->where('mission_id', $mission->id)
                         ->first();
+                if($userMission->status != true){
+                    $userMission->update(['remaining' => $mission->todolists_count]);
+                }
+                
+                if ($mission->todolists_count >= $mission->quantity) {
                     $userMission->update(['status' => true]);
                 }
             }

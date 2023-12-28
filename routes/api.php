@@ -44,6 +44,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::delete('todolist/{id}', [TodolistController::class, 'deleteTodolist']);
 
         Route::post('mission', [MissionController::class, 'storeMission']);
+        Route::get('mission', [MissionController::class, 'getAllMission']);
         Route::delete('mission/{id}', [MissionController::class, 'deleteMission']);
         Route::patch('claimMissionCoin/{id}', [MissionController::class, 'claimMissionCoin']);
         
@@ -61,5 +62,4 @@ Route::delete('delete_badge_user', [BadgesUserController::class, 'DeleteBadgeUse
 Route::delete('delete_badge', [BadgesController::class, 'deletedbadge']);
 
 
-        
-Route::get('mission', [MissionController::class, 'getAllMission']);
+    
