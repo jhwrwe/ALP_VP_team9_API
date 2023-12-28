@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TodolistDetailResource;
 use App\Http\Resources\TodolistResource;
 use App\Models\Mission;
+use App\Models\MissionUser;
 use App\Models\Todolist;
 use App\Models\TodolistMission;
 use Exception;
@@ -82,7 +83,9 @@ class TodolistController extends Controller
     public function todolistDone($id)
     {
         try {
+            $user_id = Auth::id();
             $todolist = Todolist::where('id', $id)->first();
+
 
             if (!$todolist) {
                 return [
@@ -97,13 +100,12 @@ class TodolistController extends Controller
             ]);
 
             $urgencyStatus = $todolist->urgency_status;
-            
-            $missions = Mission::where('status', false)
-                   ->where(function ($query) use ($urgencyStatus) {
-                       $query->where('urgency_status', $urgencyStatus)
-                             ->orWhereNull('urgency_status');
-                   })
-                   ->get();
+
+            $missions = Mission::where(function ($query) use ($urgencyStatus) {
+                $query->where('urgency_status', $urgencyStatus)
+                    ->orWhereNull('urgency_status');
+            })
+                ->get();
 
             foreach ($missions as $mission) {
                 TodolistMission::create([
@@ -111,6 +113,23 @@ class TodolistController extends Controller
                     'mission_id' => $mission->id
                 ]);
             }
+
+            
+            $missionsWithCount = Mission::withCount('todolists')
+                ->whereHas('todolists', function ($query) use ($user_id) {
+                    $query->where('user_id', $user_id);
+                })
+                ->get();
+
+            foreach ($missionsWithCount as $mission) {
+                if ($mission->todolists_count >= $mission->quantity) {
+                    $userMission = MissionUser::where('user_id', $user_id)
+                        ->where('mission_id', $mission->id)
+                        ->first();
+                    $userMission->update(['status' => true]);
+                }
+            }
+            dd($missionsWithCount);
 
             return [
                 'status' => Response::HTTP_OK,

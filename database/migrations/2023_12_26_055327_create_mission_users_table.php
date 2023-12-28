@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('mission_id')->constrained('missions')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
