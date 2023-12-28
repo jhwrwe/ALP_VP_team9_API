@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('fullname');
             $table->bigInteger('phone_number');
             $table->String('username')->unique();
-            $table->integer('coins')->nullable();
+            $table->integer('coins')->nullable()->default(0);
             $table->integer('role_id')->default(2);
             $table->string('email')->unique();
             $table->string('profile_photo_path', 2048)->nullable();

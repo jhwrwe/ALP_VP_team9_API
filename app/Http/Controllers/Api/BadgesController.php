@@ -101,4 +101,10 @@ public function updateBadge(Request $request){
                     }
         }
     }
+    public function seeBadge(){
+
+            $badge = Badge::all();
+            return BadgeResource::collection($badge);
+
+    }
 }
