@@ -42,6 +42,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::get('see_all_badge', [BadgesUserController::class, 'seeAllUserBadge']);
 
         Route::get('todolist/{urgency}', [TodolistController::class, 'todolist']);
+        Route::get('todolist/', [TodolistController::class, 'allTodolist']);
         Route::get('todolistDetail/{id}', [TodolistController::class, 'todolistDetail']);
         Route::get('lateTodolists', [TodolistController::class, 'showLateTodolists']);
         Route::get('todayTodolists', [TodolistController::class, 'showTodayTodolists']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\MissionUser;
 use App\Models\User;
 use App\Models\Mission;
 use App\Http\Controllers\Controller;
@@ -15,77 +16,90 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function getAllUser(){
+    public function getAllUser()
+    {
         $users = User::all();
         return UserResource::collection($users);
     }
-    public function checkPassword(){
+    public function checkPassword()
+    {
         $users = User::all();
-        $check =[];
+        $check = [];
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             array_push($check,
-            Hash::check($user->username, $user->password)
-        );
+                Hash::check($user->username, $user->password)
+            );
         }
         return $check;
     }
 
 
-    public function createUser(Request $request){
-        try{
-        $user = new User();
-        $user->fullname = $request->fullname;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->phone_number = $request->phone_number;
-        $user->username = $request->username;
-        $user->save();
-
-        return[
-            'status'=> Response::HTTP_OK,
-            'message'=> "Success",
-            'data'=>$user
-        ];
-    } Catch(Exception $e){
-        return [
-            'status'=> Response::HTTP_INTERNAL_SERVER_ERROR,
-            'message'=> $e->getMessage(),
-            'data'=> $user
-            ];
-        }
-}
-public function updateUser(Request $request){
-    if(!empty($request->email)){
-    $user = User::where('email',$request->email)->first();
-        }else{
-            $user = User::where('id',$request->id)->first();
-        }
-        if(!empty($user)){
-           try{
+    public function createUser(Request $request)
+    {
+        try {
+            $user = new User();
             $user->fullname = $request->fullname;
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone_number = $request->phone_number;
             $user->username = $request->username;
             $user->save();
+
+            $missions = Mission::all();
+            // Step 3: Attach each user to the created mission
+            foreach ($missions as $mission) {
+                MissionUser::create([
+                    'user_id' => $user->id,
+                    'mission_id' => $mission->id
+                ]);
+            }
+
             return [
-            'status'=> Response::HTTP_OK,
-            'message'=> 'Success',
-            'data'=>$user
+                'status' => Response::HTTP_OK,
+                'message' => "Success",
+                'data' => $user
             ];
-           }catch(Exception $e){
+        } catch (Exception $e) {
             return [
-                'status'=> Response::HTTP_INTERNAL_SERVER_ERROR,
-                'message'=> $e->getMessage(),
-                'data'=> $user
-                ];
-           }
+                'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                'message' => $e->getMessage(),
+                'data' => $user
+            ];
         }
-        return[
-            'status'=> Response::HTTP_NOT_FOUND,
-            'message'=> 'User not found',
-            'data'=> []
+    }
+    public function updateUser(Request $request)
+    {
+        if (!empty($request->email)) {
+            $user = User::where('email', $request->email)->first();
+        } else {
+            $user = User::where('id', $request->id)->first();
+        }
+        if (!empty($user)) {
+            try {
+                $user->fullname = $request->fullname;
+                $user->email = $request->email;
+                $user->password = Hash::make($request->password);
+                $user->phone_number = $request->phone_number;
+                $user->username = $request->username;
+                $user->save();
+                return [
+                    'status' => Response::HTTP_OK,
+                    'message' => 'Success',
+                    'data' => $user
+                ];
+            } catch (Exception $e) {
+                return [
+                    'status' => Response::HTTP_INTERNAL_SERVER_ERROR,
+                    'message' => $e->getMessage(),
+                    'data' => $user
+                ];
+            }
+        }
+        return [
+            'status' => Response::HTTP_NOT_FOUND,
+            'message' => 'User not found',
+            'data' => []
         ];
     }
     public function deleteUser(Request $request)
@@ -118,17 +132,18 @@ public function updateUser(Request $request){
             ];
         }
     }
-    public function UploadImage(Request $request){
-        if($request->hasFile('image')){
+    public function UploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
             $image = $request->file('image');
-            if($image->isValid()){
-                    $image->resize(0,0);
-                    $image->save();
-                    return [
-                        'status'=> Response::HTTP_OK,
-                        'message'=> ''
-                        ];
-                                    }
+            if ($image->isValid()) {
+                $image->resize(0, 0);
+                $image->save();
+                return [
+                    'status' => Response::HTTP_OK,
+                    'message' => ''
+                ];
+            }
         }
     }
     // public function addCoins($id){

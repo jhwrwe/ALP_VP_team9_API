@@ -34,6 +34,16 @@ class MissionController extends Controller
             ]);
 
             $mission = Mission::create($validated);
+            $users = User::all();
+
+            // Step 3: Attach each user to the created mission
+            foreach ($users as $user) {
+                MissionUser::create([
+                    'user_id' => $user->id,
+                    'mission_id' => $mission->id
+                ]);  
+            }
+
             return [
                 'status' => Response::HTTP_OK,
                 'message' => "Success",

@@ -25,6 +25,13 @@ class TodolistController extends Controller
         return TodolistResource::collection($todolists);
     }
 
+    public function allTodolist()
+    {
+        $userId = Auth::id();
+        $todolists = Todolist::all()->where('user_id', $userId);
+        return TodolistResource::collection($todolists);
+    }
+
     //todolist detail
     public function todolistDetail($id)
     {
@@ -90,6 +97,14 @@ class TodolistController extends Controller
                 return [
                     'status' => Response::HTTP_NOT_FOUND,
                     'message' => "Todolist not found",
+                    'data' => null
+                ];
+            }
+
+            if ($todolist->user_id != $user_id) {
+                return [
+                    'status' => Response::HTTP_NOT_FOUND,
+                    'message' => "Not your todolist",
                     'data' => null
                 ];
             }
