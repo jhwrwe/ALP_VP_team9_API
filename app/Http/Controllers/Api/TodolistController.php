@@ -150,7 +150,6 @@ class TodolistController extends Controller
                     $userMission->update(['status' => true]);
                 }
             }
-            dd($missionsWithCount);
 
             return [
                 'status' => Response::HTTP_OK,
