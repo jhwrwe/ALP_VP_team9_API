@@ -47,7 +47,6 @@ class UserController extends Controller
             $user->save();
 
             $missions = Mission::all();
-            // Step 3: Attach each user to the created mission
             foreach ($missions as $mission) {
                 MissionUser::create([
                     'user_id' => $user->id,
@@ -67,6 +66,10 @@ class UserController extends Controller
                 'data' => $user
             ];
         }
+    }
+    public function getDataUser(){
+        $user = User::where('id', Auth::id())->get();
+        return UserResource::collection($user);
     }
     public function updateUser(Request $request)
     {

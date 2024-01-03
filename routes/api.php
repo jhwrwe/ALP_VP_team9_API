@@ -29,6 +29,7 @@ Route::middleware(['auth:sanctum'])->group(
         Route::delete('logout', [AuthController::class, 'logout']);
         Route::get('check_password', [UserController::class, 'checkPassword']);
         Route::get('all_user', [UserController::class, 'getAllUser']);
+        Route::get('data_user', [UserController::class, 'getDataUser']);
         Route::patch('update_user', [UserController::class, 'updateUser']);
         Route::delete('delete_user', [UserController::class, 'deleteUser']);
 

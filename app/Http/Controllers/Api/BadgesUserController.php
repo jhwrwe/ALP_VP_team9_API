@@ -24,7 +24,6 @@ class BadgesUserController extends Controller
             'status'=> Response::HTTP_OK,
             'message'=>'Success',
             'data'=> BadgeUserResource::collection($badge)
-
         ];
 
     }
