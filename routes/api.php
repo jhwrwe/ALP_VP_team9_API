@@ -1,4 +1,4 @@
-<?php
+z<?php
 
 use App\Http\Controllers\Api\TodolistController;
 use App\Http\Controllers\Api\AuthController;
@@ -53,13 +53,12 @@ Route::middleware(['auth:sanctum'])->group(
         Route::post('todolist', [TodolistController::class, 'storeTodolist']);
         Route::patch('todolist/{id}', [TodolistController::class, 'updateTodolist']);
         Route::delete('todolist/{id}', [TodolistController::class, 'deleteTodolist']);
+        Route::patch('todolistDone/{id}', [TodolistController::class, 'todolistDone']);
 
         Route::post('mission', [MissionController::class, 'storeMission']);
         Route::get('mission', [MissionController::class, 'getAllMission']);
         Route::delete('mission/{id}', [MissionController::class, 'deleteMission']);
         Route::patch('claimMissionCoin/{id}', [MissionController::class, 'claimMissionCoin']);
-
-        Route::patch('todolistDone/{id}', [TodolistController::class, 'todolistDone']);
     }
 );
 

@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class TodolistResource extends JsonResource
 {
@@ -15,10 +16,15 @@ class TodolistResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "title" => $this->title,
-            "date" => $this->date,
-            "time" => $this->time,
-            "location" => $this->location,
+            'status' => Response::HTTP_OK,
+            'message' => "Success",
+            'data' => [
+                "id" => $this->id,
+                "title" => $this->title,
+                "date" => $this->date,
+                "time" => $this->time,
+                "location" => $this->location,
+            ]
         ];
     }
 }

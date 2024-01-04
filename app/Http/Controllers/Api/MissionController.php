@@ -101,7 +101,7 @@ class MissionController extends Controller
     {   
         $user_id = auth::id();
         $missionsUser = MissionUser::where('user_id', $user_id)->where('mission_id', $id)->first();
-
+        
         if ($missionsUser->status == false) {
             return [
                 'status' => Response::HTTP_NOT_FOUND,
