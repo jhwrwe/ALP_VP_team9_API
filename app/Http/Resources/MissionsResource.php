@@ -15,7 +15,6 @@ class MissionsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            
                 "remaining"=>$this->remaining,// contoh akses atribut dari relasi mission
                 "title" => $this->mission->title,
                 "description" => $this->mission->description,
