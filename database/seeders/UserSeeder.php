@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
                 'fullname' => 'User ' . $i,
                 'phone_number' => 1234567800 + $i, // Contoh nomor telepon unik
                 'username' => 'user' . $i,
-                'coins' => 50, // Asumsi koin untuk user
+                'coins' => 150, // Asumsi koin untuk user
                 'role_id' => 2,
                 'email' => 'user' . $i . '@example.com',
                 'password' => Hash::make('user123'), // Asumsi kata sandi

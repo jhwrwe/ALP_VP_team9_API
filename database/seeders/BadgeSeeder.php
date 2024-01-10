@@ -15,9 +15,33 @@ class BadgeSeeder extends Seeder
     {
         $imagePath = 'bronze_medal';
         DB::table('badges')->insert([
-            'image' => $imagePath,
+            'image' => "bronze_medal",
             'name' => 'Bronze Medal',
-            'price' => 50, 
+            'price' => 50,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('badges')->insert([
+            'image' => "silver_medal",
+            'name' => 'Silver Medal',
+            'price' => 100,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('badges')->insert([
+            'image' => "gold_medal",
+            'name' => 'Gold Medal',
+            'price' => 150,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('badges')->insert([
+            'image' => "sandglass",
+            'name' => 'Sandglass',
+            'price' => 200,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

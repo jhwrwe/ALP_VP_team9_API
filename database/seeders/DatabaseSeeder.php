@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             MissionSeeder::class,
             TodolistSeeder::class,
             BadgeSeeder::class,
-            MissionUserSeeder::class
+            MissionUserSeeder::class,
+            BadgeUserSeeder::class,
         ]);
     }
 }

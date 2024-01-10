@@ -56,7 +56,7 @@ class TodolistSeeder extends Seeder
             'title' => 'Pelatihan Anak Baru',
             'date' => '2023-12-1',
             'time' => '10:30:00',
-            'urgency_status' => 3,
+            'urgency_status' => 4,
             'description' => 'Mengadakan pelatihan untuk karyawan baru.',
             'progress_status' => false,
             'location' => 'Aula Utama',
@@ -69,11 +69,11 @@ class TodolistSeeder extends Seeder
             'title' => 'Makan Pentol',
             'date' => '2023-12-1',
             'time' => '10:30:00',
-            'urgency_status' => 3,
+            'urgency_status' => 1,
             'description' => 'Mengadakan pelatihan untuk karyawan baru.',
             'progress_status' => false,
             'location' => 'Aula Utama',
-            'user_id' => 2,  // Gantikan dengan ID user yang valid
+            'user_id' => 1,  // Gantikan dengan ID user yang valid
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -82,11 +82,11 @@ class TodolistSeeder extends Seeder
             'title' => 'Makan Bakso',
             'date' => '2023-12-1',
             'time' => '10:30:00',
-            'urgency_status' => 3,
+            'urgency_status' => 2,
             'description' => 'Mengadakan pelatihan untuk karyawan baru.',
             'progress_status' => false,
             'location' => 'Aula Utama',
-            'user_id' => 2,  // Gantikan dengan ID user yang valid
+            'user_id' => 1,  // Gantikan dengan ID user yang valid
             'created_at' => now(),
             'updated_at' => now(),
         ]);

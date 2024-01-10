@@ -27,7 +27,7 @@ class BadgesUserController extends Controller
         ];
 
     }
-    public function CreateUserBadge (Request $request,$id){
+    public function CreateUserBadge ($id){
         $badgeuser = new BadgeUser();
         $badgeuser->user_id = Auth::id();
         $badgeuser->badge_id = $id;
@@ -55,6 +55,12 @@ class BadgesUserController extends Controller
         $user->update([
             'coins'=>$user->coins - $badge->price
         ]);
+        return[
+            'status'=> Response::HTTP_OK,
+            'message'=>'Success',
+            'data'=> $user
+
+        ];
     }
     function seeAllUserBadge(){
         $badgeUsers = BadgeUser::where('user_id', Auth::id())->get();

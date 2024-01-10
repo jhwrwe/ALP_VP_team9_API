@@ -41,7 +41,7 @@ class MissionController extends Controller
                 MissionUser::create([
                     'user_id' => $user->id,
                     'mission_id' => $mission->id
-                ]);  
+                ]);
             }
 
             return [
@@ -98,7 +98,7 @@ class MissionController extends Controller
     }
 
     public function claimMissionCoin($id)
-    {   
+    {
         $user_id = auth::id();
         $missionsUser = MissionUser::where('user_id', $user_id)->where('mission_id', $id)->first();
 
@@ -118,7 +118,7 @@ class MissionController extends Controller
 
 
         if($missionsUser->status == true){
-            
+
             return [
                 'status' => Response::HTTP_OK,
                 'message' => "Coin Sucessfully Claimed",
