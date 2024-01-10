@@ -15,9 +15,11 @@ class TodolistResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            "id"=>$this->id,
             "title" => $this->title,
             "date" => $this->date,
             "time" => $this->time,
+            "progress_status" => $this->progress_status,
             "location" => $this->location,
         ];
     }

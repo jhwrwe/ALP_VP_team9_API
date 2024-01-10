@@ -145,7 +145,7 @@ class TodolistController extends Controller
                 if($userMission->status != true){
                     $userMission->update(['remaining' => $mission->todolists_count]);
                 }
-                
+
                 if ($mission->todolists_count >= $mission->quantity) {
                     $userMission->update(['status' => true]);
                 }
@@ -209,8 +209,9 @@ class TodolistController extends Controller
                 'description' => 'required',
                 'progress_status' => 'required',
                 'location' => 'required',
-                'user_id' => 'required',
+                // 'user_id' => 'required',
             ]);
+
 
             $todolist = Todolist::where('id', $id)->first();
 
